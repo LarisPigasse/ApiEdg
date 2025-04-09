@@ -84,11 +84,14 @@ src/
 
 ## Stato Sviluppo Backend
 
-| API/Servizio   | Stato           | Endpoint     | Note |
-| -------------- | --------------- | ------------ | ---- |
-| Setup iniziale | 🔴 Non iniziato | -            | -    |
-| Autenticazione | 🔴 Non iniziato | `/api/auth`  | -    |
-| Utenti         | 🔴 Non iniziato | `/api/users` | -    |
+| API/Servizio                      | Stato           | Endpoint     | Note |
+| --------------------------------- | --------------- | ------------ | ---- |
+| Configurazione backend            | 🟢 terminato    | -            | -    |
+| Def. modelli dati con Sequelizee  | 🔴 Non iniziato | -            | -    |
+| Implementazione delle route API   | 🔴 Non iniziato | -            | -    |
+| Configurazione autenticazione JWT | 🔴 Non iniziato | -            | -    |
+| Autenticazione                    | 🔴 Non iniziato | `/api/auth`  | -    |
+| Utenti                            | 🔴 Non iniziato | `/api/users` | -    |
 
 ## Decisioni Architetturali
 

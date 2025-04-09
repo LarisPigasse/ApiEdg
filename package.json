@@ -1,20 +1,46 @@
 {
   "name": "apiedg",
   "version": "1.0.0",
-  "description": "",
+  "description": "Repository del Backend della web application per Express Delivery",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LarisPigasse/ApiEdg.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mormegil",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/LarisPigasse/ApiEdg/issues"
   },
-  "homepage": "https://github.com/LarisPigasse/ApiEdg#readme"
+  "homepage": "https://github.com/LarisPigasse/ApiEdg#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.0",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.14.0",
+    "@types/sequelize": "^4.28.20",
+    "nodemon": "^3.1.9",
+    "sequelize-cli": "^6.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
 }
