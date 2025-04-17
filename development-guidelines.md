@@ -4,7 +4,7 @@
 
 Per ogni entità del database, seguiremo la seguente struttura:
 
-1. **Definizione del Modello**: Creare un file TypeScript per ogni entità nella cartella `src/models`
+1. **Definizione della tabella**: Creerò le tabelle in MySql e e con la struttura potrai definire il model `src/models`
 2. **Controller CRUD**: Implementare le operazioni CRUD in un controller nella cartella `src/controllers`
 3. **Routes API**: Definire le route API nella cartella `src/routes`
 
@@ -12,19 +12,19 @@ Per ogni entità del database, seguiremo la seguente struttura:
 
 ### Tabelle e Modelli
 
-- I nomi delle tabelle saranno in italiano e inizieranno con la lettera maiuscola (es. `Account`, `Operatori`, `Clienti`)
-- I nomi dei file dei modelli saranno in minuscolo (es. `account.ts`, `operatore.ts`, `cliente.ts`)
-- I nomi delle classi dei modelli seguiranno il PascalCase (es. `Account`, `Operatore`, `Cliente`)
+- I nomi delle tabelle saranno in italiano e inizieranno con la lettera maiuscola (es. `Operatori`, `Utenti`)
+- I nomi dei file dei modelli saranno in minuscolo (es. `operatori.ts`, `utenti.ts`)
+- I nomi delle classi dei modelli seguiranno il PascalCase (es. `Operatori`, `Utenti`)
 
 ### Campi
 
-- I nomi dei campi saranno in italiano e in camelCase (es. `idAccount`, `dataCreazione`, `ultimaLogin`)
-- Gli ID primari avranno il prefisso "id" seguito dal nome dell'entità (es. `idAccount`, `idOperatore`)
-- Le chiavi esterne avranno il prefisso "id" seguito dal nome dell'entità riferita (es. `idUtente`, `idCliente`)
+- I nomi dei campi saranno in italiano e in camelCase (es. `idOperatore`, `dataCreazione`, `ultimaLogin`)
+- Gli ID primari avranno il prefisso "id" seguito dal nome dell'entità (es. `idOperatore`, `idUtente`)
+- Le chiavi esterne avranno il prefisso "fk" seguito dal nome dell'entità riferita (es. `fkFornitore`, `fkCliente`)
 
 ### Variabili e Metodi
 
-- Le variabili e i metodi seguiranno il camelCase (es. `getOperatorById`, `updateAccount`)
+- Le variabili e i metodi seguiranno il camelCase (es. `getOperatore`, `updateUtente`)
 - I nomi dei controller seguiranno il pattern `[entità].controller.ts` (es. `operatore.controller.ts`)
 - I nomi delle route seguiranno il pattern `[entità].routes.ts` (es. `operatore.routes.ts`)
 
@@ -39,16 +39,27 @@ Quando si introduce una nuova entità, verranno specificati:
 - Eventuali vincoli o relazioni
 
 Esempio:
+Tabella Operatori
 
-```
-Tabella: Clienti
-Campi:
-- idCliente: INTEGER, PK, AUTO_INCREMENT
-- nome: VARCHAR(100), NOT NULL
-- email: VARCHAR(128), UNIQUE
-- tipo: ENUM('privato', 'azienda'), DEFAULT 'privato'
-- dataRegistrazione: DATE, DEFAULT CURRENT_DATE
-```
+CREATE TABLE `Operatori` (
+`idOperatore` int(11) NOT NULL,
+`Operatore` varchar(64) NOT NULL DEFAULT '',
+`email` varchar(64) DEFAULT NULL,
+`password` varchar(256) DEFAULT NULL,
+`stato` enum('attivo','inattivo','eliminato') NOT NULL DEFAULT 'attivo',
+`note` text NOT NULL,
+`ultimaLogin` datetime DEFAULT NULL,
+`dataCreazione` datetime NOT NULL DEFAULT current_timestamp(),
+`ultimaModifica` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+ALTER TABLE `Operatori`
+ADD PRIMARY KEY (`idOperatore`),
+ADD UNIQUE KEY `email` (`email`);
+
+ALTER TABLE `Operatori`
+MODIFY `idOperatore` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
 
 ## Operazioni Standard per Entità
 
