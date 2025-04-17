@@ -43,4 +43,4 @@ sequelize
     process.exit(1); // Termina l'applicazione in caso di errore di connessione
   });
 
-export default sequelize;
+export { sequelize };
