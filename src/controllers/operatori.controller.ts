@@ -48,14 +48,20 @@ export const filterOperatori = async (req: Request, res: Response) => {
     // Costruzione della query di filtro
     const where: any = {};
     if (query) {
-      if (query.Operatore) {
-        where.Operatore = { [Op.like]: `%${query.Operatore}%` };
+      if (query.operatore) {
+        where.operatore = { [Op.like]: `%${query.operatore}%` };
       }
       if (query.email) {
         where.email = { [Op.like]: `%${query.email}%` };
       }
       if (query.stato) {
         where.stato = query.stato;
+      }
+      if (query.profilo) {
+        where.profilo = query.profilo;
+      }
+      if (query.livello) {
+        where.livello = query.livello;
       }
     }
 
@@ -94,7 +100,8 @@ export const filterOperatori = async (req: Request, res: Response) => {
 // Crea nuovo operatore
 export const createOperatore = async (req: Request, res: Response) => {
   try {
-    const { Operatore, email, password, stato, note } = req.body;
+    const { operatore, email, password, stato, profilo, livello, note } =
+      req.body;
 
     // Controlla se l'email è già utilizzata
     if (email) {
@@ -104,6 +111,13 @@ export const createOperatore = async (req: Request, res: Response) => {
       }
     }
 
+    // Validazione del livello
+    if (livello !== undefined && (livello < 8 || livello > 64)) {
+      return res
+        .status(400)
+        .json({ message: "Il livello deve essere compreso tra 8 e 64" });
+    }
+
     // Hash della password se presente
     let hashedPassword = null;
     if (password) {
@@ -111,10 +125,12 @@ export const createOperatore = async (req: Request, res: Response) => {
     }
 
     const newOperatore = await Operatori.create({
-      Operatore,
+      operatore,
       email,
       password: hashedPassword,
       stato: stato || "attivo",
+      profilo: profilo || "operator",
+      livello: livello || 8,
       note: note || "",
       ultimaLogin: null,
     });
@@ -138,27 +154,44 @@ export const createOperatore = async (req: Request, res: Response) => {
 export const updateOperatore = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { Operatore, email, password, stato, note } = req.body;
+    const {
+      operatore: nomeOperatore,
+      email,
+      password,
+      stato,
+      profilo,
+      livello,
+      note,
+    } = req.body;
 
-    const operatore = await Operatori.findByPk(id);
+    const operatoreRecord = await Operatori.findByPk(id);
 
-    if (!operatore) {
+    if (!operatoreRecord) {
       return res.status(404).json({ message: "Operatore non trovato" });
     }
 
     // Controlla se l'email è già utilizzata da un altro operatore
-    if (email && email !== operatore.email) {
+    if (email && email !== operatoreRecord.email) {
       const existingOperatore = await Operatori.findOne({ where: { email } });
       if (existingOperatore && existingOperatore.idOperatore !== Number(id)) {
         return res.status(400).json({ message: "Email già in uso" });
       }
     }
 
+    // Validazione del livello
+    if (livello !== undefined && (livello < 8 || livello > 64)) {
+      return res
+        .status(400)
+        .json({ message: "Il livello deve essere compreso tra 8 e 64" });
+    }
+
     // Prepara l'oggetto di aggiornamento
     const updateData: any = {};
-    if (Operatore !== undefined) updateData.Operatore = Operatore;
+    if (nomeOperatore !== undefined) updateData.operatore = nomeOperatore;
     if (email !== undefined) updateData.email = email;
     if (stato !== undefined) updateData.stato = stato;
+    if (profilo !== undefined) updateData.profilo = profilo;
+    if (livello !== undefined) updateData.livello = livello;
     if (note !== undefined) updateData.note = note;
 
     // Hash della password se presente
@@ -166,11 +199,11 @@ export const updateOperatore = async (req: Request, res: Response) => {
       updateData.password = await bcrypt.hash(password, 10);
     }
 
-    await operatore.update(updateData);
+    await operatoreRecord.update(updateData);
 
     // Rimuovi la password dalla risposta
     const operatoreSenzaPassword = {
-      ...operatore.toJSON(),
+      ...operatoreRecord.toJSON(),
       password: undefined, // Utilizziamo undefined invece di delete
     };
 

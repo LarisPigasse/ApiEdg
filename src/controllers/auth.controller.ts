@@ -125,3 +125,23 @@ export const changePassword = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Errore durante il cambio password" });
   }
 };
+
+// Ottieni informazioni sull'operatore corrente
+export const getCurrentOperatore = async (req: Request, res: Response) => {
+  try {
+    const operatore = await Operatori.findByPk(req.user?.idOperatore, {
+      attributes: { exclude: ["password"] },
+    });
+
+    if (!operatore) {
+      return res.status(404).json({ message: "Operatore non trovato" });
+    }
+
+    res.status(200).json(operatore);
+  } catch (error) {
+    console.error("Errore in getCurrentOperatore:", error);
+    res
+      .status(500)
+      .json({ message: "Errore durante il recupero dei dati dell'operatore" });
+  }
+};

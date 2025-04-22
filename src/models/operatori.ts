@@ -2,10 +2,12 @@ import { Model, DataTypes, Sequelize } from "sequelize";
 
 export interface OperatoriAttributes {
   idOperatore: number;
-  Operatore: string;
+  operatore: string;
   email: string | null;
   password: string | null;
   stato: "attivo" | "inattivo" | "eliminato";
+  profilo: "root" | "admin" | "operator" | "guest";
+  livello: number;
   note: string;
   ultimaLogin: Date | null;
   dataCreazione: Date;
@@ -23,10 +25,12 @@ export class Operatori
   implements OperatoriAttributes
 {
   public idOperatore!: number;
-  public Operatore!: string;
+  public operatore!: string;
   public email!: string | null;
   public password!: string | null;
   public stato!: "attivo" | "inattivo" | "eliminato";
+  public profilo!: "root" | "admin" | "operator" | "guest";
+  public livello!: number;
   public note!: string;
   public ultimaLogin!: Date | null;
   public dataCreazione!: Date;
@@ -40,7 +44,7 @@ export class Operatori
           primaryKey: true,
           autoIncrement: true,
         },
-        Operatore: {
+        operatore: {
           type: DataTypes.STRING(64),
           allowNull: false,
           defaultValue: "",
@@ -58,6 +62,20 @@ export class Operatori
           type: DataTypes.ENUM("attivo", "inattivo", "eliminato"),
           allowNull: false,
           defaultValue: "attivo",
+        },
+        profilo: {
+          type: DataTypes.ENUM("root", "admin", "operator", "guest"),
+          allowNull: false,
+          defaultValue: "operator",
+        },
+        livello: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 8,
+          validate: {
+            min: 8,
+            max: 64,
+          },
         },
         note: {
           type: DataTypes.TEXT,

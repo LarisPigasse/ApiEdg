@@ -1,29 +1,45 @@
 import { Router } from "express";
 import * as controller from "../controllers/operatori.controller";
-import { authenticate } from "../middleware/auth.middleware";
+import {
+  authenticate,
+  requireProfile,
+  requireWriteAccess,
+} from "../middleware/auth.middleware";
 
 const router = Router();
 
-// Applica il middleware di autenticazione a tutte le route
-// Questo è il modo corretto di usare il middleware con Express e TypeScript
-router.use(authenticate as any);
+// Middleware di autenticazione per tutte le rotte
+const auth = authenticate as any;
+router.use(auth);
 
-// Ottieni tutti gli operatori
+// Rotte di lettura (accessibili a tutti)
 router.get("/", controller.getAllOperatori as any);
-
-// Filtra operatori con paginazione
+router.get("/:id", controller.getOperatore as any);
 router.post("/filter", controller.filterOperatori as any);
 
-// Ottieni un operatore specifico
-router.get("/:id", controller.getOperatore as any);
+// Rotte di scrittura (non accessibili ai guest)
+// operatori con profilo root e admin possono creare nuovi operatori
+router.post(
+  "/",
+  requireWriteAccess as any,
+  requireProfile(["root", "admin"]) as any,
+  controller.createOperatore as any
+);
 
-// Crea un nuovo operatore
-router.post("/", controller.createOperatore as any);
+// operatori con profilo root e admin possono modificare altri operatori
+router.put(
+  "/:id",
+  requireWriteAccess as any,
+  requireProfile(["root", "admin"]) as any,
+  controller.updateOperatore as any
+);
 
-// Aggiorna un operatore esistente
-router.put("/:id", controller.updateOperatore as any);
-
-// Elimina un operatore (soft delete)
-router.delete("/:id", controller.deleteOperatore as any);
+// solo operatori con profilo root possono eliminare operatori
+router.delete(
+  "/:id",
+  requireWriteAccess as any,
+  requireProfile(["root"]) as any,
+  controller.deleteOperatore as any
+);
 
 export default router;

@@ -45,6 +45,8 @@ export const authenticate = async (
       idOperatore: operatore.idOperatore,
       email: operatore.email,
       stato: operatore.stato,
+      profilo: operatore.profilo,
+      livello: operatore.livello,
     };
 
     next();
@@ -74,6 +76,63 @@ export const requireAccountType = (accountType: string) => {
   };
 };
 
+// Middleware per verificare il profilo dell'operatore
+export const requireProfile = (allowedProfiles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return res.status(401).json({ message: "Autenticazione richiesta" });
+    }
+    if (!allowedProfiles.includes(req.user.profilo)) {
+      return res.status(403).json({
+        message: "Accesso negato: profilo non autorizzato",
+      });
+    }
+    next();
+  };
+};
+
+// Middleware per verificare il livello dell'operatore
+export const requireLevel = (minLevel: number) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return res.status(401).json({ message: "Autenticazione richiesta" });
+    }
+
+    // Se l'operatore è 'root', bypassare il controllo del livello
+    if (req.user.profilo === "root") {
+      return next();
+    }
+
+    if (req.user.livello < minLevel) {
+      return res.status(403).json({
+        message: `Accesso negato: livello richiesto ${minLevel}, livello corrente ${req.user.livello}`,
+      });
+    }
+
+    next();
+  };
+};
+
+// Middleware per verificare che l'operatore possa modificare dati (non è guest)
+export const requireWriteAccess = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "Autenticazione richiesta" });
+  }
+
+  if (req.user.profilo === "guest") {
+    return res.status(403).json({
+      message:
+        "Accesso negato: gli utenti con profilo guest possono solo leggere i dati",
+    });
+  }
+
+  next();
+};
+
 // Funzione per generare un token JWT
 export const generateToken = (operatore: any): string => {
   const JWT_SECRET = process.env.JWT_SECRET || "default_secret_key";
@@ -84,6 +143,8 @@ export const generateToken = (operatore: any): string => {
     {
       idOperatore: operatore.idOperatore,
       email: operatore.email,
+      profilo: operatore.profilo,
+      livello: operatore.livello,
     },
     JWT_SECRET as any,
     { expiresIn: JWT_EXPIRATION } as any
