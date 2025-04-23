@@ -3,8 +3,8 @@
 ## Informazioni Generali
 
 - **Nome progetto**: EdgProject
-- **Data ultimo aggiornamento**: 2025-04-08
-- **Sessione corrente**: 1
+- **Data ultimo aggiornamento**: 2025-04-22
+- **Sessione corrente**: 2
 - **Repository**:
   - Frontend: [ProEdg](https://github.com/LarisPigasse/ProEdg.git)
   - Backend: [ApiEdg](https://github.com/LarisPigasse/ApiEdg.git)
@@ -15,17 +15,29 @@
 
 ```
 src/
-├── assets/              # Immagini, font, ecc.
-├── components/          # Componenti React riutilizzabili
-├── context/             # Context API e provider
-├── features/            # Funzionalità organizzate (per Redux)
-├── hooks/               # Custom hooks React
-├── layouts/             # Layout condivisi dell'applicazione
-├── pages/               # Pagine dell'applicazione
-├── services/            # Servizi e chiamate API
-├── store/               # Configurazione Redux
-├── types/               # Definizioni TypeScript
-└── utils/               # Funzioni di utilità
+├── assets/                # Immagini, font, ecc.
+├── components/            # Componenti React riutilizzabili
+│   ├── layout/            # Componenti di layout (Header, Footer)
+│   └── navigation/        # Componenti di navigazione (MainMenu)
+├── config/                # Configurazioni statiche
+│   └── menuItems.ts       # Definizione degli elementi del menu
+├── context/               # Context API e provider
+├── features/              # Funzionalità organizzate (per Redux)
+├── hooks/                 # Custom hooks React
+├── layouts/               # Layout condivisi dell'applicazione
+│   └── MainLayout.tsx     # Layout principale con header, menu, content e footer
+├── pages/                 # Pagine dell'applicazione
+│   └── base/              # Pagine base dell'applicazione
+│       ├── Dashboard.tsx  # Dashboard principale
+│       └── NotFound.tsx   # Pagina 404
+├── routes/                # Configurazione delle route
+│   └── index.tsx          # Definizione delle route dell'applicazione
+├── services/              # Servizi e chiamate API
+├── store/                 # Configurazione Redux
+├── types/                 # Definizioni TypeScript
+├── routes/                # per tutti i file relativi al routing
+├── config/                # per i dati statici del menu
+└── utils/                 # Funzioni di utilità
 ```
 
 ### Backend (ApiEdg)
@@ -73,25 +85,26 @@ src/
 
 ## Stato Sviluppo Frontend
 
-| Componente/Pagina       | Stato           | Note                          |
-| ----------------------- | --------------- | ----------------------------- |
-| Configurazione progetto | 🟡 In corso     | Definizione stack tecnologico |
-| Setup iniziale con Vite | 🔴 Non iniziato | -                             |
-| Routing                 | 🔴 Non iniziato | -                             |
-| Struttura Redux         | 🔴 Non iniziato | -                             |
-| Autenticazione          | 🔴 Non iniziato | -                             |
-| Componenti UI base      | 🔴 Non iniziato | -                             |
+| Componente/Pagina       | Stato           | Note                                           |
+| ----------------------- | --------------- | ---------------------------------------------- |
+| Configurazione progetto | 🟢 Completato   | Stack tecnologico definito e installato        |
+| Setup iniziale con Vite | 🟢 Completato   | Progetto inizializzato con Vite e TypeScript   |
+| Routing                 | 🟢 Completato   | Sistema di routing di base implementato        |
+| Layout principale       | 🟢 Completato   | Layout con header, menu, content e footer      |
+| Struttura Redux         | 🟡 In corso     | Configurato store, slice da implementare       |
+| Autenticazione          | 🔴 Non iniziato | Da implementare integrazione con API           |
+| Componenti UI base      | 🟡 In corso     | Creati componenti base di layout e navigazione |
 
 ## Stato Sviluppo Backend
 
-| API/Servizio                      | Stato           | Endpoint     | Note |
-| --------------------------------- | --------------- | ------------ | ---- |
-| Configurazione backend            | 🟢 terminato    | -            | -    |
-| Def. modelli dati con Sequelizee  | 🔴 Non iniziato | -            | -    |
-| Implementazione delle route API   | 🔴 Non iniziato | -            | -    |
-| Configurazione autenticazione JWT | 🔴 Non iniziato | -            | -    |
-| Autenticazione                    | 🔴 Non iniziato | `/api/auth`  | -    |
-| Utenti                            | 🔴 Non iniziato | `/api/users` | -    |
+| API/Servizio                      | Stato         | Endpoint         | Note                                 |
+| --------------------------------- | ------------- | ---------------- | ------------------------------------ |
+| Configurazione backend            | 🟢 Completato | -                | -                                    |
+| Def. modelli dati con Sequelize   | 🟢 Completato | -                | Modello Operatori creato             |
+| Implementazione delle route API   | 🟢 Completato | -                | Route per Operatori create           |
+| Configurazione autenticazione JWT | 🟢 Completato | -                | -                                    |
+| Autenticazione                    | 🟢 Completato | `/api/auth`      | Login, token verify, change password |
+| Operatori                         | 🟢 Completato | `/api/operatori` | CRUD completo con autorizzazioni     |
 
 ## Decisioni Architetturali
 
@@ -104,7 +117,8 @@ src/
 - **Formulari**: Formik con validazione Yup
 - **Build tool**: Vite per HMR veloce e build ottimizzate
 - **Tabelle**: TanStack Table per gestione tabelle complesse
-- **Autenticazione**: JWT (da implementare)
+- **Autenticazione**: JWT implementato nel backend, da integrare nel frontend
+- **Layout**: Layout responsive minimalista con header, menu orizzontale, content e footer
 
 ## Progressi Sessioni
 
@@ -115,18 +129,27 @@ src/
 - Definizione stack tecnologico frontend
 - Creazione file di documentazione dell'architettura
 
+### Sessione 2 (2025-04-22)
+
+- Implementazione backend: modello Operatori, controller, routes, autenticazione
+- Inizializzazione progetto frontend con Vite e TypeScript
+- Configurazione TailwindCSS
+- Creazione struttura base del progetto
+- Implementazione sistema di routing
+- Creazione layout principale responsive con header, menu, content e footer
+- Aggiornamento documentazione dell'architettura
+
 ## TODO Prossima Sessione
 
-- Inizializzare progetto frontend con Vite e TypeScript
-- Configurare TailwindCSS
-- Impostare la struttura base del progetto frontend
-- Configurare Redux e React Query
-- Impostare il routing di base con React Router
-- Inizializzare progetto backend con Express e TypeScript
-- Configurare connessione MySQL e Sequelize
+- Implementare l'autenticazione nel frontend integrandola con le API del backend
+- Creare la pagina di login e gestione del token JWT
+- Implementare route protette
+- Creare la pagina di gestione degli operatori con tabella e form
+- Completare la configurazione di Redux e React Query
 
 ## Note Importanti
 
 - Prioritizzare la modularità e la riusabilità dei componenti
 - Mantenere una chiara separazione delle responsabilità tra frontend e backend
 - Documentare i tipi TypeScript in modo completo
+- Assicurare che l'interfaccia utente sia responsive e funzioni su diversi dispositivi
