@@ -15,6 +15,7 @@ import { Operatori } from "./models/operatori";
 // Importa routes
 import operatoriRoutes from "./routes/operatori.routes";
 import authRoutes from "./routes/auth.routes";
+import utilsRoutes from "./routes/utils.routes";
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
@@ -62,6 +63,7 @@ app.get("/", (req: Request, res: Response) => {
 // Registra le routes API
 app.use("/api/operatori", operatoriRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/utils", utilsRoutes);
 
 // Gestione errori di route non trovate
 app.use((req: Request, res: Response) => {

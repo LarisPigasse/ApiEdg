@@ -3,7 +3,7 @@
 ## Informazioni Generali
 
 - **Nome progetto**: EdgProject
-- **Data ultimo aggiornamento**: 2025-04-22
+- **Data ultimo aggiornamento**: 2025-04-28
 - **Sessione corrente**: 2
 - **Repository**:
   - Frontend: [ProEdg](https://github.com/LarisPigasse/ProEdg.git)
@@ -15,29 +15,45 @@
 
 ```
 src/
-├── assets/                # Immagini, font, ecc.
-├── components/            # Componenti React riutilizzabili
-│   ├── layout/            # Componenti di layout (Header, Footer)
-│   └── navigation/        # Componenti di navigazione (MainMenu)
-├── config/                # Configurazioni statiche
-│   └── menuItems.ts       # Definizione degli elementi del menu
-├── context/               # Context API e provider
-├── features/              # Funzionalità organizzate (per Redux)
-├── hooks/                 # Custom hooks React
-├── layouts/               # Layout condivisi dell'applicazione
-│   └── MainLayout.tsx     # Layout principale con header, menu, content e footer
-├── pages/                 # Pagine dell'applicazione
-│   └── base/              # Pagine base dell'applicazione
-│       ├── Dashboard.tsx  # Dashboard principale
-│       └── NotFound.tsx   # Pagina 404
-├── routes/                # Configurazione delle route
-│   └── index.tsx          # Definizione delle route dell'applicazione
-├── services/              # Servizi e chiamate API
-├── store/                 # Configurazione Redux
-├── types/                 # Definizioni TypeScript
-├── routes/                # per tutti i file relativi al routing
-├── config/                # per i dati statici del menu
-└── utils/                 # Funzioni di utilità
+├── assets/                         # Immagini, font, ecc.
+├── components/                     # Componenti React riutilizzabili
+│   ├── layout/                     # Componenti di layout (Header, Footer, ecc.)
+│   │   ├── AppLogo.tsx             # Logo dell'applicazione
+│   │   ├── ConnectionStatus.tsx    # Indicatore connessione backend
+│   │   ├── Footer.tsx              # Footer dell'applicazione
+│   │   ├── Header.tsx              # Header dell'applicazione
+│   │   └── VersionInfo.tsx         # Componente info versione
+│   └── navigation/                 # Componenti di navigazione
+│       ├── MainMenu.tsx            # Menu principale (specifico per modulo)
+│       ├── ModuleDropdownItem.tsx  # Elemento dropdown del menu moduli
+│       ├── ModuleMenuItem.tsx      # Elemento nel menu dei moduli
+│       ├── ModulesMenu.tsx         # Menu dei moduli nella header
+|       ├── FooterMenu.tsx          # Menu nel footer
+│       └── UserProfileMenu.tsx     # Menu utente con dropdown
+├── config/                         # Configurazioni statiche
+│   ├── constants.ts                # Costanti globali dell'applicazione
+│   ├── menuItems.ts                # Definizione degli elementi del menu
+│   └── modulesConfig.ts            # Configurazione dei moduli
+├── context/                        # Context API e provider
+├── features/                       # Funzionalità organizzate (per Redux)
+├── hooks/                          # Custom hooks React
+├── layouts/                        # Layout condivisi dell'applicazione
+│   └── MainLayout.tsx              # Layout principale con header, menu, content e footer
+├── pages/                          # Pagine dell'applicazione
+│   └── base/                       # Pagine base dell'applicazione
+│       ├── Dashboard.tsx           # Dashboard principale
+│       └── NotFound.tsx            # Pagina 404
+├── routes/                         # Configurazione delle route
+│   └── index.tsx                   # Definizione delle route dell'applicazione
+├── services/                       # Servizi e chiamate API
+├── store/                          # Configurazione Redux
+│   ├── hooks.ts                    # Hook tipizzati per Redux
+│   ├── index.ts                    # Configurazione dello store
+│   ├── rootReducer.ts              # Combinazione dei reducer
+│   └── slices/                     # Slice Redux per funzionalità
+│       └── authSlice.ts            # Slice per autenticazione
+├── types/                          # Definizioni TypeScript
+└── utils/                          # Funzioni di utilità
 ```
 
 ### Backend (ApiEdg)
@@ -91,20 +107,25 @@ src/
 | Setup iniziale con Vite | 🟢 Completato   | Progetto inizializzato con Vite e TypeScript   |
 | Routing                 | 🟢 Completato   | Sistema di routing di base implementato        |
 | Layout principale       | 🟢 Completato   | Layout con header, menu, content e footer      |
-| Struttura Redux         | 🟡 In corso     | Configurato store, slice da implementare       |
-| Autenticazione          | 🔴 Non iniziato | Da implementare integrazione con API           |
-| Componenti UI base      | 🟡 In corso     | Creati componenti base di layout e navigazione |
+| Struttura Redux         | 🟢 Completato   | Store configurato con slice per auth           |
+| Struttura componenti    | 🟢 Completato   | Architettura modulare con componenti atomici   |
+| Menu moduli             | 🟢 Completato   | Menu con supporto dropdown e permessi          |
+| User profile            | 🟢 Completato   | Menu utente con dropdown implementato          |
+| Indicatore connessione  | 🟢 Completato   | Verifica e mostra stato connessione al backend |
+| Autenticazione          | 🟡 In corso     | Slice redux configurato, UI da implementare    |
+| Pagine CRUD operatori   | 🔴 Non iniziato | Da implementare                                |
 
 ## Stato Sviluppo Backend
 
-| API/Servizio                      | Stato         | Endpoint         | Note                                 |
-| --------------------------------- | ------------- | ---------------- | ------------------------------------ |
-| Configurazione backend            | 🟢 Completato | -                | -                                    |
-| Def. modelli dati con Sequelize   | 🟢 Completato | -                | Modello Operatori creato             |
-| Implementazione delle route API   | 🟢 Completato | -                | Route per Operatori create           |
-| Configurazione autenticazione JWT | 🟢 Completato | -                | -                                    |
-| Autenticazione                    | 🟢 Completato | `/api/auth`      | Login, token verify, change password |
-| Operatori                         | 🟢 Completato | `/api/operatori` | CRUD completo con autorizzazioni     |
+| API/Servizio                      | Stato         | Endpoint            | Note                                 |
+| --------------------------------- | ------------- | ------------------- | ------------------------------------ |
+| Configurazione backend            | 🟢 Completato | -                   | -                                    |
+| Def. modelli dati con Sequelize   | 🟢 Completato | -                   | Modello Operatori creato             |
+| Implementazione delle route API   | 🟢 Completato | -                   | Route per Operatori create           |
+| Configurazione autenticazione JWT | 🟢 Completato | -                   | -                                    |
+| Autenticazione                    | 🟢 Completato | `/api/auth`         | Login, token verify, change password |
+| Operatori                         | 🟢 Completato | `/api/operatori`    | CRUD completo con autorizzazioni     |
+| Endpoint health check             | 🟢 Completato | `/api/utils/health` | Per verifica connessione             |
 
 ## Decisioni Architetturali
 
@@ -113,12 +134,15 @@ src/
 - **Database**: MySQL per la persistenza dei dati
 - **ORM**: Sequelize per interazione con database
 - **Gestione stato**: Redux per stato globale, React Query per dati remoti
-- **Styling**: TailwindCSS utility-first approach
+- **Styling**: TailwindCSS utility-first approach con estensioni custom
+- **Icone**: Lucide Icons per un design minimalista e professionale
 - **Formulari**: Formik con validazione Yup
 - **Build tool**: Vite per HMR veloce e build ottimizzate
 - **Tabelle**: TanStack Table per gestione tabelle complesse
-- **Autenticazione**: JWT implementato nel backend, da integrare nel frontend
-- **Layout**: Layout responsive minimalista con header, menu orizzontale, content e footer
+- **Autenticazione**: JWT implementato nel backend, in corso nel frontend
+- **Layout**: Layout responsive ottimizzato con priorità al content
+- **Componenti**: Architettura modulare con componenti piccoli e focalizzati
+- **Configurazione**: Costanti globali centralizzate per facile manutenzione
 
 ## Progressi Sessioni
 
@@ -139,13 +163,27 @@ src/
 - Creazione layout principale responsive con header, menu, content e footer
 - Aggiornamento documentazione dell'architettura
 
+### Sessione 3 (2025-04-28)
+
+- Ottimizzazione layout per dare priorità al content
+- Implementazione struttura modulare dei componenti
+- Creazione menu moduli con dropdown e gestione permessi
+- Implementazione profile dropdown con info utente
+- Configurazione Redux con slice per autenticazione
+- Aggiunta indicatore stato connessione al backend
+- Implementazione file costanti globali
+- Estensione TailwindCSS con classi personalizzate (text-xxs)
+- Aggiornamento documentazione dell'architettura
+
 ## TODO Prossima Sessione
 
 - Implementare l'autenticazione nel frontend integrandola con le API del backend
-- Creare la pagina di login e gestione del token JWT
+- Creare la pagina di login
+- Implementare gestione token JWT e persistenza sessione
 - Implementare route protette
+- Creare endpoint health check nel backend
 - Creare la pagina di gestione degli operatori con tabella e form
-- Completare la configurazione di Redux e React Query
+- Implementare React Query per chiamate API
 
 ## Note Importanti
 
@@ -153,3 +191,4 @@ src/
 - Mantenere una chiara separazione delle responsabilità tra frontend e backend
 - Documentare i tipi TypeScript in modo completo
 - Assicurare che l'interfaccia utente sia responsive e funzioni su diversi dispositivi
+- Evitare stringhe hardcoded utilizzando le costanti globali
