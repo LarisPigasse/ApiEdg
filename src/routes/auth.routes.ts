@@ -10,6 +10,14 @@ const router = Router();
 // Rotte pubbliche (non richiedono autenticazione)
 router.post("/login", controller.login as any);
 
+// Rotte per il reset della password (non richiedono autenticazione)
+router.post("/request-reset", controller.requestPasswordReset as any);
+router.get(
+  "/validate-reset-token/:token",
+  controller.validateResetToken as any
+);
+router.post("/reset-password", controller.resetPassword as any);
+
 // Rotte protette (richiedono autenticazione)
 // Utilizziamo "as any" in modo più esteso per risolvere i problemi di tipo
 const auth = authenticate as any;

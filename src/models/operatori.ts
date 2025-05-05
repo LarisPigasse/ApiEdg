@@ -1,7 +1,8 @@
-import { Model, DataTypes, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize, UUIDV4 } from "sequelize";
 
 export interface OperatoriAttributes {
   idOperatore: number;
+  uuid: string;
   operatore: string;
   email: string | null;
   password: string | null;
@@ -25,6 +26,7 @@ export class Operatori
   implements OperatoriAttributes
 {
   public idOperatore!: number;
+  public uuid!: string;
   public operatore!: string;
   public email!: string | null;
   public password!: string | null;
@@ -43,6 +45,12 @@ export class Operatori
           type: DataTypes.INTEGER,
           primaryKey: true,
           autoIncrement: true,
+        },
+        uuid: {
+          type: DataTypes.UUID,
+          defaultValue: UUIDV4,
+          allowNull: false,
+          unique: true,
         },
         operatore: {
           type: DataTypes.STRING(64),

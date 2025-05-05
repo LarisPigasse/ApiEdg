@@ -1,5 +1,7 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
+import { Operatori } from "../models/operatori";
+import { ResetTokens } from "../models/resetTokens";
 
 dotenv.config();
 
@@ -32,6 +34,22 @@ const sequelize = new Sequelize(
   }
 );
 
+// Inizializza i modelli
+const initModels = () => {
+  // Inizializza i modelli
+  Operatori.initModel(sequelize);
+  ResetTokens.initModel(sequelize);
+
+  // Definisci le associazioni
+  ResetTokens.belongsTo(Operatori, { foreignKey: "idOperatore" });
+  Operatori.hasMany(ResetTokens, { foreignKey: "idOperatore" });
+
+  return { Operatori, ResetTokens };
+};
+
+// Inizializza e esporta i modelli
+const models = initModels();
+
 // Verifica se la connessione al database funziona correttamente
 sequelize
   .authenticate()
@@ -43,4 +61,4 @@ sequelize
     process.exit(1); // Termina l'applicazione in caso di errore di connessione
   });
 
-export { sequelize };
+export { sequelize, models };

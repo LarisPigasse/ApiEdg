@@ -43,6 +43,7 @@ export const authenticate = async (
     // Aggiunge l'utente alla richiesta
     req.user = {
       idOperatore: operatore.idOperatore,
+      uuid: operatore.uuid,
       email: operatore.email,
       stato: operatore.stato,
       profilo: operatore.profilo,
@@ -142,6 +143,7 @@ export const generateToken = (operatore: any): string => {
   return jwt.sign(
     {
       idOperatore: operatore.idOperatore,
+      uuid: operatore.uuid,
       email: operatore.email,
       profilo: operatore.profilo,
       livello: operatore.livello,

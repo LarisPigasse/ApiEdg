@@ -2,9 +2,9 @@
 
 ## Informazioni Generali
 
-- **Nome progetto**: EdgProject
-- **Data ultimo aggiornamento**: 2025-04-28
-- **Sessione corrente**: 2
+- **Nome progetto**: EDG - EdgPro
+- **Data ultimo aggiornamento**: 2025-05-05
+- **Sessione corrente**: 4
 - **Repository**:
   - Frontend: [ProEdg](https://github.com/LarisPigasse/ProEdg.git)
   - Backend: [ApiEdg](https://github.com/LarisPigasse/ApiEdg.git)
@@ -15,59 +15,74 @@
 
 ```
 src/
-├── assets/                         # Immagini, font, ecc.
-├── components/                     # Componenti React riutilizzabili
-│   ├── layout/                     # Componenti di layout (Header, Footer, ecc.)
-│   │   ├── AppLogo.tsx             # Logo dell'applicazione
-│   │   ├── ConnectionStatus.tsx    # Indicatore connessione backend
-│   │   ├── Footer.tsx              # Footer dell'applicazione
-│   │   ├── Header.tsx              # Header dell'applicazione
-│   │   └── VersionInfo.tsx         # Componente info versione
-│   └── navigation/                 # Componenti di navigazione
-│       ├── MainMenu.tsx            # Menu principale (specifico per modulo)
-│       ├── ModuleDropdownItem.tsx  # Elemento dropdown del menu moduli
-│       ├── ModuleMenuItem.tsx      # Elemento nel menu dei moduli
-│       ├── ModulesMenu.tsx         # Menu dei moduli nella header
-|       ├── FooterMenu.tsx          # Menu nel footer
-│       └── UserProfileMenu.tsx     # Menu utente con dropdown
-├── config/                         # Configurazioni statiche
-│   ├── constants.ts                # Costanti globali dell'applicazione
-│   ├── menuItems.ts                # Definizione degli elementi del menu
-│   └── modulesConfig.ts            # Configurazione dei moduli
-├── context/                        # Context API e provider
-├── features/                       # Funzionalità organizzate (per Redux)
-├── hooks/                          # Custom hooks React
-├── layouts/                        # Layout condivisi dell'applicazione
-│   └── MainLayout.tsx              # Layout principale con header, menu, content e footer
-├── pages/                          # Pagine dell'applicazione
-│   └── base/                       # Pagine base dell'applicazione
-│       ├── Dashboard.tsx           # Dashboard principale
-│       └── NotFound.tsx            # Pagina 404
-├── routes/                         # Configurazione delle route
-│   └── index.tsx                   # Definizione delle route dell'applicazione
-├── services/                       # Servizi e chiamate API
-├── store/                          # Configurazione Redux
-│   ├── hooks.ts                    # Hook tipizzati per Redux
-│   ├── index.ts                    # Configurazione dello store
-│   ├── rootReducer.ts              # Combinazione dei reducer
-│   └── slices/                     # Slice Redux per funzionalità
-│       └── authSlice.ts            # Slice per autenticazione
-├── types/                          # Definizioni TypeScript
-└── utils/                          # Funzioni di utilità
+├── assets/                             # Immagini, font, ecc.
+├── components/                         # Componenti React riutilizzabili
+│   ├── layout/                         # Componenti di layout (Header, Footer, ecc.)
+│   │   ├── AppLogo.tsx                 # Logo dell'applicazione
+│   │   ├── ConnectionStatus.tsx        # Indicatore connessione backend
+│   │   ├── Footer.tsx                  # Footer dell'applicazione
+│   │   ├── Header.tsx                  # Header dell'applicazione
+│   │   └── VersionInfo.tsx             # Componente info versione
+│   ├── navigation/                     # Componenti di navigazione
+│   |   ├── MainMenu.tsx                # Menu principale (specifico per modulo)
+│   |   ├── ModuleDropdownItem.tsx      # Elemento dropdown del menu moduli
+│   |   ├── ModuleMenuItem.tsx          # Elemento nel menu dei moduli
+│   |   ├── ModulesMenu.tsx             # Menu dei moduli nella header
+|   |   ├── FooterMenu.tsx              # Menu nel footer
+│   |   └── UserProfileMenu.tsx         # Menu utente con dropdown
+|   └── ui/
+│       ├── Button.tsx                  # Componente button con variati
+│       ├── Input.tsx                   # Componente input con varianti
+│       ├── SubmitButton.tsx            # Componente button per submit
+├── config/                             # Configurazioni statiche
+│   ├── constants.ts                    # Costanti globali dell'applicazione
+│   ├── menuItems.ts                    # Definizione degli elementi del menu
+│   └── modulesConfig.ts                # Configurazione dei moduli
+├── context/                            # Context API e provider
+├── features/                           # Funzionalità organizzate (per Redux)
+├── hooks/                              # Custom hooks React
+├── layouts/                            # Layout condivisi dell'applicazione
+│   └── MainLayout.tsx                  # Layout principale con header, menu, content e footer
+├── pages/                              # Pagine dell'applicazione
+│   ├── auth/                           # Pagine base dell'applicazione
+│   |   ├── login.tsx                   # Pagina del login
+│   |   └── ResetPasswordConfirm.tsx    # Pagina di conferma del reset della password
+│   |   └── ResetPasswordRequest.tsx    # Pagina di richiesta del reset della password
+│   └── base/                           # Pagine base dell'applicazione
+│       ├── Dashboard.tsx               # Dashboard principale
+│       └── NotFound.tsx                # Pagina 404
+├── routes/                             # Configurazione delle route
+│   └── index.tsx                       # Definizione delle route dell'applicazione
+├── services/                           # Servizi e chiamate API
+|   └── apiService.ts                   # Tipi e funzioni per le risposte API
+|   └── authService.ts                  # Servizio di autenticazione
+├── store/                              # Configurazione Redux
+│   ├── hooks.ts                        # Hook tipizzati per Redux
+│   ├── index.ts                        # Configurazione dello store
+│   ├── rootReducer.ts                  # Combinazione dei reducer
+│   └── slices/                         # Slice Redux per funzionalità
+│       └── authSlice.ts                # Slice per autenticazione
+├── types/                              # Definizioni TypeScript
+└── utils/                              # Funzioni di utilità
 ```
 
 ### Backend (ApiEdg)
 
 ```
 src/
-├── config/              # Configurazioni
-├── controllers/         # Controller per le route
-├── middleware/          # Middleware Express
-├── models/              # Modelli dati/database
-├── routes/              # Definizioni delle route API
-├── services/            # Logica di business
-├── types/               # Definizioni TypeScript
-└── utils/               # Funzioni di utilità
+├── config/                         # Configurazioni
+├── controllers/                    # Controller per le route
+├── middleware/                     # Middleware Express
+├── models/                         # Modelli dati/database
+├── routes/                         # Definizioni delle route API
+├── services/
+│   ├── emailService.ts             # Servizio invio email automatiche
+│   └── email-templates/            # Template per le email atuomatiche
+│       ├── passwordReset.ts        # Template per il reset della password e per la conferma
+│       ├── ... (altri template)    # Altri template ancora da definire
+│       └── baseTemplate.ts         # Templare di base per elementi comuni a tutte le email automatiche
+├── types/                          # Definizioni TypeScript
+└── utils/                          # Funzioni di utilità
 ```
 
 ## Stack Tecnologico
@@ -112,7 +127,7 @@ src/
 | Menu moduli             | 🟢 Completato   | Menu con supporto dropdown e permessi          |
 | User profile            | 🟢 Completato   | Menu utente con dropdown implementato          |
 | Indicatore connessione  | 🟢 Completato   | Verifica e mostra stato connessione al backend |
-| Autenticazione          | 🟡 In corso     | Slice redux configurato, UI da implementare    |
+| Autenticazione          | 🟢 Completato   | Slice redux e UI implementati, reset password  |
 | Pagine CRUD operatori   | 🔴 Non iniziato | Da implementare                                |
 
 ## Stato Sviluppo Backend
@@ -173,6 +188,13 @@ src/
 - Aggiunta indicatore stato connessione al backend
 - Implementazione file costanti globali
 - Estensione TailwindCSS con classi personalizzate (text-xxs)
+- Aggiornamento documentazione dell'architettura
+
+### Sessione 4 (2025-05-05)
+
+- Pagine per autenticazione e reset passwors
+- Prevista gestione UUID per le entità principali, per ora solo operatori
+- Frontend, sempre seguendo filosofia dei piccoli componenti, abbiamo definito Button, SubmitButton e Input
 - Aggiornamento documentazione dell'architettura
 
 ## TODO Prossima Sessione

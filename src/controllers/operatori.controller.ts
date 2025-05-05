@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Operatori } from "../models/operatori";
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
 // Importa l'operatore Op da Sequelize per l'utilizzo nelle query di filtro
 import { Op } from "sequelize";
 
@@ -125,6 +126,7 @@ export const createOperatore = async (req: Request, res: Response) => {
     }
 
     const newOperatore = await Operatori.create({
+      uuid: uuidv4(),
       operatore,
       email,
       password: hashedPassword,
